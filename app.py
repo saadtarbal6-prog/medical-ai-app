@@ -47,7 +47,7 @@ if user_input := st.chat_input("اكتب أعراضك أو سؤالك الطبي
     with st.chat_message("assistant"):
         with st.spinner("جاري تحليل السؤال..."):
             response = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model="llama-3.1-8b-instant",
                 messages=st.session_state.messages,
                 temperature=0.3
             )
