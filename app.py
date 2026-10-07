@@ -1,5 +1,5 @@
 import streamlit as st
-from openai import OpenAI
+from groq import Groq
 
 st.set_page_config(page_title="المساعد الطبي الذكي", page_icon="🩺")
 
@@ -11,13 +11,13 @@ st.warning(
     "إذا كنت تعاني من حالة طارئة، يرجى الاتصال برقم الطوارئ فوراً."
 )
 
-api_key = st.sidebar.text_input("أدخل مفتاح OpenAI API Key:", type="password")
+api_key = st.sidebar.text_input("أدخل مفتاح Groq API Key:", type="password")
 
 if not api_key:
     st.info("💡 يرجى إدخال مفتاح API في الشريط الجانبي لبدء المحادثة.")
     st.stop()
 
-client = OpenAI(api_key=api_key)
+client = Groq(api_key=api_key)
 
 SYSTEM_PROMPT = """
 أنت مساعد طبي ذكي وتوعوي ومؤدب.
@@ -47,7 +47,7 @@ if user_input := st.chat_input("اكتب أعراضك أو سؤالك الطبي
     with st.chat_message("assistant"):
         with st.spinner("جاري تحليل السؤال..."):
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="llama-3.3-70b-versatile",
                 messages=st.session_state.messages,
                 temperature=0.3
             )
